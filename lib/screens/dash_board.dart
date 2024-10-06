@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+  final String? tripName; // Allow tripName to be nullable
+
+  const DashboardScreen({super.key, this.tripName});
 
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -20,33 +22,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
-  void _removeMoney() {
-    setState(() {
-      double amountToRemove = double.tryParse(_amountController.text) ?? 0.0;
-      if (amountToRemove <= _currentBalance) {
-        _currentBalance -= amountToRemove;
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Insufficient balance')),
-        );
-      }
-      _amountController.clear();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard', style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'Dashboard',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: const Color.fromARGB(255, 141, 29, 29),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Trip Name Display
+              Text(
+                widget.tripName != null
+                    ? 'Saving for: ${widget.tripName}' // Show the trip name if available
+                    : 'No trip selected yet!', // Show message if no trip selected
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 16),
+
               // Section to view current balance
               const Text(
                 'Current Balance',
@@ -56,7 +60,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.blue.shade100,
+                  color: const Color.fromARGB(246, 239, 216, 142),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -64,17 +68,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   children: [
                     Text(
                       '\$$_currentBalance',
-                      style: TextStyle(
-                        fontSize: 28,
+                      style: const TextStyle(
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade900,
+                        color: Color.fromARGB(255, 91, 54, 54),
                       ),
                     ),
-                    Icon(Icons.account_balance_wallet, size: 40, color: Colors.blue.shade900),
+                    const Icon(
+                      Icons.account_balance_wallet,
+                      size: 40,
+                      color: Color.fromARGB(255, 45, 104, 231),
+                    ),
                   ],
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 30),
 
               // Input field to add/remove money
               TextField(
@@ -94,12 +102,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ElevatedButton(
                     onPressed: _addMoney,
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                    child: const Text('Deposite Money'),
-                  ),
-                  ElevatedButton(
-                    onPressed: _removeMoney,
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                    child: const Text('Withdraw Money'),
+                    child: const Text('Deposit Money'),
                   ),
                 ],
               ),
@@ -107,7 +110,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // Pie Chart Section
               const Text(
-                'Deposite Destribution',
+                'Deposit Distribution',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
@@ -115,11 +118,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 height: 200,
                 child: PieChartWidget(),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 30),
 
               // Bar Graph Section
               const Text(
-                'Monthly Desposite Breakdown',
+                'Monthly Deposit Breakdown',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
@@ -131,7 +134,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // Line Graph Section
               const Text(
-                'Deposite Progress Over Time',
+                'Deposit Progress Over Time',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
@@ -216,7 +219,7 @@ class BarGraphWidget extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 6,
-                color: Colors.blue,
+                color: Colors.red,
                 width: 16,
               ),
             ],
@@ -226,7 +229,7 @@ class BarGraphWidget extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 12,
-                color: Colors.blue,
+                color: Colors.green,
                 width: 16,
               ),
             ],
@@ -257,10 +260,10 @@ class LineGraphWidget extends StatelessWidget {
               const FlSpot(5, 4),
             ],
             isCurved: true,
-            color: Colors.blue,
+            color: Colors.green,
             barWidth: 4,
             isStrokeCapRound: true,
-            belowBarData: BarAreaData(show: true, color: Colors.blue.withOpacity(0.3)),
+            belowBarData: BarAreaData(show: true, color: Colors.green.withOpacity(0.3)),
           ),
         ],
       ),

@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     const Text(
                       'SULUHU TRAVELS',  // Text under the image
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontFamily: "Poppins",
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
               padding: EdgeInsets.only(bottom: 30.0),
               child: Text(
                 '©Develop With Effect',  // Footer text
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+                style: TextStyle(fontSize: 16, color: Colors.black),
               ),
             ),
           ],

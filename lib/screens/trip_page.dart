@@ -14,7 +14,7 @@ class TripPage extends StatelessWidget {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(0, 124, 3, 3), // Rich red shade for a premium feel
+                Color.fromARGB(0, 124, 3, 3),
                 Color.fromARGB(0, 96, 2, 2),
               ],
               begin: Alignment.topLeft,
@@ -23,10 +23,10 @@ class TripPage extends StatelessWidget {
           ),
         ),
         title: const Text(
-          'Hi Vawzen',
+          'Hi Yahya',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 22,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
           ),
@@ -68,7 +68,7 @@ class TripPage extends StatelessWidget {
                   child: Text(
                     'Choose Package',
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       shadows: [
@@ -121,13 +121,17 @@ class TripPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const SelectedTrip(
+                          builder: (context) => SelectedTrip(
                             tripImage: 'assets/images/umrah.jpg',
                             tripTitle: 'Umrah',
                             tripDescription: 'Umrah is a pilgrimage to Mecca, performed by Muslims that can be undertaken at any time of the year.',
                             tripDate: "December",
                             tripDuration: "2 weeks",
                             tripPrice: '\$1650 (7 days)',
+                            onBookNow: (tripName) {
+                              // You can add functionality here when booking the trip
+                              print('Booked: $tripName');
+                            },
                           ),
                         ),
                       );
@@ -144,13 +148,17 @@ class TripPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const SelectedTrip(
+                          builder: (context) => SelectedTrip(
                             tripImage: 'assets/images/suluhu.jpg',
                             tripTitle: 'Suluhu',
                             tripDescription: 'Suluhu is a serene destination with beautiful landscapes and wildlife.',
                             tripDuration: "4 weeks",
                             tripDate: "November",
                             tripPrice: '\$500 (5 days)',
+                            onBookNow: (tripName) {
+                              // You can add functionality here when booking the trip
+                              print('Booked: $tripName');
+                            },
                           ),
                         ),
                       );
@@ -241,44 +249,46 @@ class TripPage extends StatelessWidget {
 
   // Featured Trip Section
   Widget _buildFeaturedTripSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Colors.orangeAccent,
-              Colors.deepOrange,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 15,
-              offset: const Offset(0, 4),
-            ),
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            Colors.orangeAccent,
+            Colors.deepOrange,
           ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-              child: Image.asset(
-                'assets/images/suluhu.jpg',
-                height: 160,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 15,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            child: Image.asset(
+              'assets/images/suluhu.jpg',
+              height: 160,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView( // Wrap the Row in SingleChildScrollView
+              scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -286,7 +296,7 @@ class TripPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Featured Trip: Maldives',
+                        'Featured Trip: Madina',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -303,15 +313,18 @@ class TripPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(width: 20), // Add some spacing
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
+                        horizontal: 8,
+                        vertical: 8,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      // Add your booking functionality here
+                    },
                     child: const Text(
                       'Book Now',
                       style: TextStyle(
@@ -323,9 +336,10 @@ class TripPage extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

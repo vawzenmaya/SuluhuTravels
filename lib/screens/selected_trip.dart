@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travels/screens/dash_board.dart';
+
 
 class SelectedTrip extends StatelessWidget {
   final String tripImage;
@@ -7,6 +9,7 @@ class SelectedTrip extends StatelessWidget {
   final String tripDate;
   final String tripDuration;
   final String tripPrice;
+  final Function(String) onBookNow;
 
   const SelectedTrip({
     super.key,
@@ -16,6 +19,7 @@ class SelectedTrip extends StatelessWidget {
     required this.tripDate,
     required this.tripDuration,
     required this.tripPrice,
+    required this.onBookNow,
   });
 
   @override
@@ -23,7 +27,7 @@ class SelectedTrip extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(tripTitle),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: const Color.fromARGB(255, 141, 29, 29),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -45,7 +49,7 @@ class SelectedTrip extends StatelessWidget {
                   Text(
                     tripTitle,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -54,11 +58,11 @@ class SelectedTrip extends StatelessWidget {
                   Text(
                     tripDescription,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 15,
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 15),
                   // Date and Duration
                   Row(
                     children: [
@@ -88,25 +92,30 @@ class SelectedTrip extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                      color: Colors.redAccent,
                     ),
                   ),
                   const SizedBox(height: 24),
                   // Booking Button
                   ElevatedButton(
                     onPressed: () {
-                      // Handle booking action
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DashboardScreen(tripName: tripTitle), // Pass the trip name
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      backgroundColor: Colors.blueAccent,
+                      backgroundColor: const Color.fromARGB(255, 141, 29, 29),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: const Text(
                       'Book Now',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
                 ],

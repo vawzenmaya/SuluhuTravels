@@ -27,39 +27,61 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 141, 29, 29),
-        title: const Text(
-          'Hi, Yahya',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
+      body: Stack(
+        children: [
+          // Main body of the app
+          SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 80), // Add space for AppBar height
+                  _buildCarousel(), // Move carousel here
+                  const SizedBox(height: 20),
+                  _buildHeroSection(),
+                  const SizedBox(height: 20),
+                  _buildCategoriesSection(),
+                  const SizedBox(height: 6),
+                  _buildDealsSection(),
+                ],
+              ),
+            ),
           ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications_active_outlined,
-              color: Colors.white,
+          // AppBar with rounded corners
+          Container(
+            height: 75, // Adjust height as necessary
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 141, 29, 29),
+              borderRadius: const BorderRadius.vertical(
+                bottom: Radius.circular(10),
+              ),
+            ),
+            child: SafeArea(
+              child: AppBar(
+                elevation: 0, // Remove default elevation
+                backgroundColor: Colors.transparent, // Make background transparent
+                title: const Text(
+                  'Hi, Yahya',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.notifications_active_outlined,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildCarousel(),
-            const SizedBox(height: 20),
-            _buildHeroSection(),
-            const SizedBox(height: 20),
-            _buildCategoriesSection(),
-            const SizedBox(height: 20),
-            _buildDealsSection(),
-          ],
-        ),
       ),
       bottomNavigationBar: BottomMenu(
         activeIndex: _activeIndex,
@@ -77,17 +99,12 @@ class _HomePageState extends State<HomePage> {
       options: CarouselOptions(
         autoPlay: true,
         enlargeCenterPage: true,
-        height: 200.0,
+        height: 150.0,
         viewportFraction: 0.85,
-        onPageChanged: (index, reason) {
-          setState(() {
-            // _currentIndex = index;
-          });
-        },
       ),
       items: imgList.map((item) {
         return ClipRRect(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(30),
           child: Image.asset(
             item,
             fit: BoxFit.cover,
@@ -99,51 +116,48 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHeroSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Colors.orangeAccent,
-              Colors.deepOrange,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Make It Happen!',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              ),
-              onPressed: () {},
-              child: const Text(
-                'Plan Your Next Trip',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.deepOrange,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            Colors.orangeAccent,
+            Colors.deepOrange,
           ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
+        borderRadius: BorderRadius.circular(26),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Make It Happen!',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
+            onPressed: () {},
+            child: const Text(
+              'Plan Your Next Trip',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.deepOrange,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -156,7 +170,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           const Text(
             'Popular Categories',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           Row(
@@ -194,7 +208,7 @@ class _HomePageState extends State<HomePage> {
               ),
               _buildCategoryItem(
                 icon: Icons.place,
-                label: 'Pilgrimage',
+                label: 'Cities',
                 isSelected: _isPilgrimageSelected,
                 onPressed: () {
                   setState(() {
@@ -224,12 +238,12 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: isSelected ? Colors.deepOrange : Colors.orangeAccent,
             child: Icon(
               icon,
-              size: 30,
+              size: 26,
               color: Colors.white,
             ),
           ),
           const SizedBox(height: 8),
-          Text(label, style: const TextStyle(fontSize: 16)),
+          Text(label, style: const TextStyle(fontSize: 12)),
         ],
       ),
     );
@@ -243,7 +257,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           const Text(
             'Deals of the Month',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           _buildDealItem('assets/images/suluhu.jpg', 'Beach Paradise', '50% off'),
@@ -283,7 +297,7 @@ class _HomePageState extends State<HomePage> {
                     offer,
                     style: const TextStyle(
                       fontSize: 16,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 128, 69, 69),
                     ),
                   ),
                 ],

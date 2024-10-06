@@ -19,39 +19,45 @@ class LogInScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 100),
-              // Add logo image here
+              const SizedBox(height: 40), // Adjusted height for better spacing
               Center(
                 child: Image.asset(
-                  'assets/icons/app_icon.png', // Path to your app_icon.png
-                  height: 120, // Adjust the height as needed
-                  width: 120, // Adjust the width as needed
+                  'assets/icons/app_icon.png',
+                  height: 120,
+                  width: 120,
                 ),
               ),
-              const SizedBox(height: 5),
-              const Center(
+              const SizedBox(height: 6), // More space for clarity
+              Center(
                 child: Column(
                   children: [
                     Text("Welcome",
-                style: TextStyle(
-                    color: Color.fromARGB(255, 141, 29, 29),
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700),),
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 141, 29, 29),
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Text("To",
-                style: TextStyle(
-                    color: Color.fromARGB(255, 141, 29, 29),
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700),),
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 141, 29, 29),
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Text("Suluhu Travels",
-                style: TextStyle(
-                    color: Color.fromARGB(255, 141, 29, 29),
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700),)
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 141, 29, 29),
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('New to this app?', style: subTitle),
                   const SizedBox(width: 5),
@@ -67,14 +73,14 @@ class LogInScreen extends StatelessWidget {
                     child: Text(
                       'Sign Up',
                       style: textButton.copyWith(
-                        decoration: TextDecoration.underline, color: const Color.fromARGB(255, 141, 29, 29),
-                        decorationThickness: 1,
+                        decoration: TextDecoration.underline,
+                        color: const Color.fromARGB(255, 141, 29, 29),
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               const LogInForm(),
               const SizedBox(height: 20),
               GestureDetector(
@@ -89,14 +95,13 @@ class LogInScreen extends StatelessWidget {
                 child: const Text(
                   'Forgot password?',
                   style: TextStyle(
-                    color: kZambeziColor,
+                    color: Color.fromARGB(222, 142, 48, 48),
                     fontSize: 14,
                     decoration: TextDecoration.underline,
-                    decorationThickness: 1,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               PrimaryButton(
                 buttonText: 'Log In',
                 onPressed: () {
@@ -109,9 +114,11 @@ class LogInScreen extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 20),
-              Text('Or log in with:', style: subTitle.copyWith(color: kBlackColor)),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
+              Center(
+                child: Text('Or log in with:', style: subTitle.copyWith(color: kBlackColor)),
+              ),
+              const SizedBox(height: 15),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -123,6 +130,7 @@ class LogInScreen extends StatelessWidget {
                     ),
                     textButton: 'Google',
                   ),
+                  // Add more social login options here if needed
                 ],
               ),
             ],

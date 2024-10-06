@@ -40,7 +40,7 @@ class _AccountScreenState extends State<AccountScreen> {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontSize: 22,
+            fontSize: 20,
           ),
         ),
         centerTitle: true,
@@ -68,9 +68,9 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Yahya',
+              '@Yahya',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.1,
               ),

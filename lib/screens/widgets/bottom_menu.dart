@@ -19,7 +19,7 @@ class BottomMenu extends StatelessWidget {
       margin: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -30,7 +30,7 @@ class BottomMenu extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: const [
@@ -68,7 +68,7 @@ class BottomMenu extends StatelessWidget {
             }
           },
           selectedItemColor: const Color.fromARGB(255, 141, 29, 29),
-          unselectedItemColor: Colors.grey,
+          unselectedItemColor: const Color.fromARGB(255, 11, 2, 2),
           showSelectedLabels: true,
           showUnselectedLabels: true,
           elevation: 0,
