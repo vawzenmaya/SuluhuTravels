@@ -66,7 +66,9 @@ flutter_native_splash:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icons/app_icon.png" 
+  image_path: "assets/icons/app_icon.png"
+  # adaptive_icon_background: "assets/images/adaptive_background.png"  # Or a color e.g. "#FFFFFF"
+  # adaptive_icon_foreground: "assets/images/adaptive_foreground.png"
   android_background_color: "#FFFFFF" 
   ios_background_color: "#FFFFFF" 
 # For information on the generic Dart part of this file, see the

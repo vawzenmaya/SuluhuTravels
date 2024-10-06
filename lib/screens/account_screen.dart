@@ -21,13 +21,14 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 141, 29, 29),
         elevation: 0,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFF1E90FF),  // DodgerBlue
-                Color(0xFF00BFFF),  // DeepSkyBlue
+                Color.fromARGB(0, 30, 143, 255),  // DodgerBlue
+                Color.fromARGB(0, 0, 191, 255),  // DeepSkyBlue
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -67,7 +68,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Vawzen',
+              'Yahya',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -106,7 +107,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   const SizedBox(height: 15),
                   _buildButton(
                     icon: Icons.chat,
-                    label: 'Chat with Admin',
+                    label: 'Chat with Suluhu',
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -168,7 +169,7 @@ class _AccountScreenState extends State<AccountScreen> {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-        backgroundColor: const Color(0xFF1E90FF), // DodgerBlue
+        backgroundColor: const Color.fromARGB(255, 141, 29, 29), // DodgerBlue
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

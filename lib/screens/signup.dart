@@ -19,11 +19,23 @@ class SignUpScreen extends StatelessWidget {
             const SizedBox(
               height: 70,
             ),
-            Padding(
+            Center(
+                child: Image.asset(
+                  'assets/icons/app_icon.png', // Path to your app_icon.png
+                  height: 120, // Adjust the height as needed
+                  width: 120, // Adjust the width as needed
+                ),
+              ),
+            const Padding(
               padding: kDefaultPadding,
-              child: Text(
-                'Create Account',
-                style: titleText,
+              child: Center(
+                child: Text(
+                  'Create Account',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 141, 29, 29),
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700),
+                ),
               ),
             ),
             const SizedBox(
@@ -50,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                     child: Text(
                       'Log In',
                       style: textButton.copyWith(
-                        decoration: TextDecoration.underline,
+                        decoration: TextDecoration.underline, color: const Color.fromARGB(255, 141, 29, 29),
                         decorationThickness: 1,
                       ),
                     ),
@@ -71,13 +83,6 @@ class SignUpScreen extends StatelessWidget {
             const Padding(
               padding: kDefaultPadding,
               child: CheckBox('Agree to terms and conditions.'),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Padding(
-              padding: kDefaultPadding,
-              child: CheckBox('I have at least 18 years old.'),
             ),
             const SizedBox(
               height: 20,

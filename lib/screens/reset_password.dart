@@ -16,11 +16,23 @@ class ResetPasswordScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 250,
+              height: 150,
             ),
-            Text(
-              'Reset Password',
-              style: titleText,
+            Center(
+              child: Image.asset(
+                'assets/icons/app_icon.png', // Path to your app_icon.png
+                height: 120, // Adjust the height as needed
+                width: 120, // Adjust the width as needed
+              ),
+            ),
+            const Center(
+              child: Text(
+                'Reset Password',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 141, 29, 29),
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700),
+              ),
             ),
             const SizedBox(
               height: 5,
@@ -44,7 +56,10 @@ class ResetPasswordScreen extends StatelessWidget {
                         builder: (context) => const LogInScreen(),
                       ));
                 },
-                child: PrimaryButton(buttonText: 'Reset Password', onPressed: () {  },)),
+                child: PrimaryButton(
+                  buttonText: 'Reset Password',
+                  onPressed: () {},
+                )),
           ],
         ),
       ),

@@ -19,15 +19,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.blue.shade800, Colors.blue.shade800],
+                colors: [Color.fromARGB(255, 141, 29, 29), Color.fromARGB(255, 141, 29, 29)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
             ),
           ),
-          title: const Text('Settings'),
+          title: const Text('Settings', style: TextStyle(color: Colors.white),),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -43,9 +43,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               Container(
                 height: 150,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.blue.shade800, Colors.blue.shade800],
+                    colors: [Color.fromARGB(255, 141, 29, 29), Color.fromARGB(255, 141, 29, 29)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -76,12 +76,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           // User Info
           const Text(
-            'Vawzen',
+            'Yahya',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
           const Text(
-            'vawzen@gmail.com',
+            'Yahya@gmail.com',
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
           const SizedBox(height: 20),

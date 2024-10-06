@@ -19,9 +19,38 @@ class LogInScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 120),
-              Text('Welcome Back', style: titleText),
+              const SizedBox(height: 100),
+              // Add logo image here
+              Center(
+                child: Image.asset(
+                  'assets/icons/app_icon.png', // Path to your app_icon.png
+                  height: 120, // Adjust the height as needed
+                  width: 120, // Adjust the width as needed
+                ),
+              ),
               const SizedBox(height: 5),
+              const Center(
+                child: Column(
+                  children: [
+                    Text("Welcome",
+                style: TextStyle(
+                    color: Color.fromARGB(255, 141, 29, 29),
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700),),
+                    Text("To",
+                style: TextStyle(
+                    color: Color.fromARGB(255, 141, 29, 29),
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700),),
+                    Text("Suluhu Travels",
+                style: TextStyle(
+                    color: Color.fromARGB(255, 141, 29, 29),
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700),)
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Text('New to this app?', style: subTitle),
@@ -38,7 +67,7 @@ class LogInScreen extends StatelessWidget {
                     child: Text(
                       'Sign Up',
                       style: textButton.copyWith(
-                        decoration: TextDecoration.underline,
+                        decoration: TextDecoration.underline, color: const Color.fromARGB(255, 141, 29, 29),
                         decorationThickness: 1,
                       ),
                     ),

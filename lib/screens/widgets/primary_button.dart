@@ -19,7 +19,7 @@ class PrimaryButton extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: kPrimaryColor,
+        color: const Color.fromARGB(255, 141, 29, 29),
       ),
       child: ElevatedButton(
         onPressed: onPressed,
@@ -30,7 +30,7 @@ class PrimaryButton extends StatelessWidget {
         ),
         child: Text(
           buttonText,
-          style: textButton.copyWith(color: kPrimaryColor),
+          style: textButton.copyWith(color: const Color.fromARGB(255, 141, 29, 29)),
         ),
       ),
     );

@@ -67,7 +67,7 @@ class BottomMenu extends StatelessWidget {
               );
             }
           },
-          selectedItemColor: Colors.black,
+          selectedItemColor: const Color.fromARGB(255, 141, 29, 29),
           unselectedItemColor: Colors.grey,
           showSelectedLabels: true,
           showUnselectedLabels: true,

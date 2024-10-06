@@ -8,13 +8,14 @@ class TripPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 141, 29, 29),
         elevation: 0,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(255, 124, 3, 3), // Rich red shade for a premium feel
-                Color.fromARGB(255, 96, 2, 2),
+                Color.fromARGB(0, 124, 3, 3), // Rich red shade for a premium feel
+                Color.fromARGB(0, 96, 2, 2),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,

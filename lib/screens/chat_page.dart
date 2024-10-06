@@ -33,8 +33,8 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat with Admin'),
-        backgroundColor: Colors.blueAccent,
+        title: const Text('Chat with Suluhu', style: TextStyle(color: Colors.white),),
+        backgroundColor: const Color.fromARGB(255, 141, 29, 29),
         actions: [
           IconButton(
             icon: const Icon(Icons.more_vert),
@@ -100,7 +100,7 @@ class _ChatPageState extends State<ChatPage> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       filled: true,
-                      fillColor: const Color.fromARGB(255, 171, 205, 233),
+                      fillColor: const Color.fromARGB(255, 212, 216, 220),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
                     ),
                   ),

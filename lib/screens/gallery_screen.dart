@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:travels/screens/widgets/bottom_menu.dart';
 
 class GalleryScreen extends StatefulWidget {
-  const GalleryScreen({super.key});
+  const GalleryScreen({Key? key}) : super(key: key);
 
   @override
   _GalleryScreenState createState() => _GalleryScreenState();
 }
 
 class _GalleryScreenState extends State<GalleryScreen> {
-  int _activeIndex = 2; // Assuming this is the index for the gallery screen
+  int _activeIndex = 0;
 
+  // Modify the _images list to track the liked state for each image.
   final List<Map<String, dynamic>> _images = [
     {
       'imagePath': 'assets/images/suluhu.jpg',
@@ -18,6 +19,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
       'posterName': 'John Doe',
       'posterImage': 'assets/images/maguy.jpg',
       'likes': 10,
+      'liked': false, // Add liked state for this post
       'comments': [
         {
           'comment': 'Amazing......',
@@ -45,6 +47,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
       'posterName': 'Jane Smith',
       'posterImage': 'assets/images/maguy.jpg',
       'likes': 20,
+      'liked': false, // Add liked state for this post
       'comments': [
         {
           'comment': 'Wish I was there!',
@@ -66,31 +69,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
       'showComments': false,
       'time': '8 hours ago'
     },
-    // Add more image data here
   ];
-
-  void _addComment(int index, String comment) {
-    setState(() {
-      _images[index]['comments'].add({
-        'comment': comment,
-        'commenterName': 'You',
-        'commenterImage': 'assets/images/maguy.jpg',
-        'time': 'Just now',
-        'likes': 0,
-        'replies': []
-      });
-    });
-  }
 
   void _toggleLike(int index) {
     setState(() {
-      _images[index]['likes']++;
-    });
-  }
-
-  void _toggleCommentLike(int imageIndex, int commentIndex) {
-    setState(() {
-      _images[imageIndex]['comments'][commentIndex]['likes']++;
+      _images[index]['likes'] += _images[index]['liked'] ? -1 : 1;
+      _images[index]['liked'] = !_images[index]['liked']; // Toggle the liked state
     });
   }
 
@@ -100,27 +84,103 @@ class _GalleryScreenState extends State<GalleryScreen> {
     });
   }
 
-  void _addReply(int imageIndex, int commentIndex, String reply) {
+  void _toggleCommentLike(int imageIndex, int commentIndex) {
     setState(() {
-      _images[imageIndex]['comments'][commentIndex]['replies'].add({
-        'reply': reply,
-        'replierName': 'You',
-        'replierImage': 'assets/images/maguy.jpg',
-        'time': 'Just now',
-        'likes': 0
-      });
+      _images[imageIndex]['comments'][commentIndex]['likes']++;
     });
+  }
+
+  void _showCommentDialog(BuildContext context, int index) {
+    final TextEditingController _commentController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Add a Comment'),
+          content: TextField(
+            controller: _commentController,
+            decoration: const InputDecoration(hintText: 'Enter your comment'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _images[index]['comments'].add({
+                    'comment': _commentController.text,
+                    'commenterName': 'You',
+                    'commenterImage': 'assets/images/maguy.jpg',
+                    'time': 'Just now',
+                    'likes': 0,
+                    'replies': []
+                  });
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Post'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showReplyDialog(BuildContext context, int imageIndex, int commentIndex) {
+    final TextEditingController _replyController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Add a Reply'),
+          content: TextField(
+            controller: _replyController,
+            decoration: const InputDecoration(hintText: 'Enter your reply'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _images[imageIndex]['comments'][commentIndex]['replies'].add({
+                    'reply': _replyController.text,
+                    'replierName': 'You',
+                    'replierImage': 'assets/images/maguy.jpg',
+                    'time': 'Just now',
+                    'likes': 0
+                  });
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Post'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gallery'),
+        backgroundColor: const Color.fromARGB(255, 141, 29, 29),
+        title: const Text('Gallery', style: TextStyle(color: Colors.white)),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.blue.shade300, Colors.blue.shade800],
+              colors: [Color.fromARGB(0, 100, 180, 246), Color.fromARGB(0, 21, 101, 192)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -164,9 +224,17 @@ class _GalleryScreenState extends State<GalleryScreen> {
                       children: [
                         Row(
                           children: [
-                            IconButton(
-                              icon: const Icon(Icons.thumb_up),
-                              onPressed: () => _toggleLike(index),
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.thumb_up,
+                                  color: _images[index]['liked']
+                                      ? Color.fromARGB(255, 141, 29, 29)// Color when liked
+                                      : Colors.grey, // Color when not liked
+                                ),
+                                onPressed: () => _toggleLike(index),
+                              ),
                             ),
                             Text('${_images[index]['likes']} likes'),
                           ],
@@ -253,70 +321,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
           });
         },
       ),
-    );
-  }
-
-  void _showCommentDialog(BuildContext context, int index) {
-    final TextEditingController _commentController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Add a Comment'),
-          content: TextField(
-            controller: _commentController,
-            decoration: const InputDecoration(hintText: 'Enter your comment'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                _addComment(index, _commentController.text);
-                Navigator.of(context).pop();
-              },
-              child: const Text('Post'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showReplyDialog(BuildContext context, int imageIndex, int commentIndex) {
-    final TextEditingController _replyController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Add a Reply'),
-          content: TextField(
-            controller: _replyController,
-            decoration: const InputDecoration(hintText: 'Enter your reply'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                _addReply(imageIndex, commentIndex, _replyController.text);
-                Navigator.of(context).pop();
-              },
-              child: const Text('Post'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

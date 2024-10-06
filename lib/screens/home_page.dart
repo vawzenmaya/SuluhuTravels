@@ -11,7 +11,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _activeIndex = 1;
-  // int _currentIndex = 0;
+
+  // Track the pressed state of each icon
+  bool _isFlightSelected = false;
+  bool _isExploreSelected = false;
+  bool _isCitySelected = false;
+  bool _isPilgrimageSelected = false;
 
   final List<String> imgList = [
     'assets/images/travels.jpg',
@@ -23,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: const Color.fromARGB(255, 141, 29, 29),
         title: const Text(
           'Hi, Yahya',
           style: TextStyle(
@@ -100,14 +105,21 @@ class _HomePageState extends State<HomePage> {
         width: double.infinity,
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: Colors.lightBlueAccent.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(10),
+          gradient: const LinearGradient(
+            colors: [
+              Colors.orangeAccent,
+              Colors.deepOrange,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Travel the World with Us!',
+              'Make It Happen!',
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
@@ -125,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                 'Plan Your Next Trip',
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.lightBlueAccent,
+                  color: Colors.deepOrange,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -150,10 +162,46 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildCategoryItem(Icons.flight_takeoff, 'Adventure'),
-              _buildCategoryItem(Icons.travel_explore_outlined, 'Discover'),
-              _buildCategoryItem(Icons.location_city, 'City Tours'),
-              _buildCategoryItem(Icons.place, 'Pilgrimage'),
+              _buildCategoryItem(
+                icon: Icons.flight_takeoff,
+                label: 'Adventure',
+                isSelected: _isFlightSelected,
+                onPressed: () {
+                  setState(() {
+                    _isFlightSelected = !_isFlightSelected;
+                  });
+                },
+              ),
+              _buildCategoryItem(
+                icon: Icons.travel_explore_outlined,
+                label: 'Discover',
+                isSelected: _isExploreSelected,
+                onPressed: () {
+                  setState(() {
+                    _isExploreSelected = !_isExploreSelected;
+                  });
+                },
+              ),
+              _buildCategoryItem(
+                icon: Icons.volunteer_activism,
+                label: 'Donate',
+                isSelected: _isCitySelected,
+                onPressed: () {
+                  setState(() {
+                    _isCitySelected = !_isCitySelected;
+                  });
+                },
+              ),
+              _buildCategoryItem(
+                icon: Icons.place,
+                label: 'Pilgrimage',
+                isSelected: _isPilgrimageSelected,
+                onPressed: () {
+                  setState(() {
+                    _isPilgrimageSelected = !_isPilgrimageSelected;
+                  });
+                },
+              ),
             ],
           ),
         ],
@@ -161,17 +209,29 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCategoryItem(IconData icon, String label) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.lightBlueAccent,
-          child: Icon(icon, size: 30, color: Colors.white),
-        ),
-        const SizedBox(height: 8),
-        Text(label, style: const TextStyle(fontSize: 16)),
-      ],
+  Widget _buildCategoryItem({
+    required IconData icon,
+    required String label,
+    required bool isSelected,
+    required VoidCallback onPressed,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: isSelected ? Colors.deepOrange : Colors.orangeAccent,
+            child: Icon(
+              icon,
+              size: 30,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(label, style: const TextStyle(fontSize: 16)),
+        ],
+      ),
     );
   }
 

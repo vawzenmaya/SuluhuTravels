@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   // Method to navigate to LogInScreen after 5 seconds
   _navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 15), () {});  // Increased to 5 seconds
+    await Future.delayed(const Duration(seconds: 5), () {});  // Increased to 5 seconds
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const LogInScreen()),
@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color.fromARGB(255, 141, 13, 4),  // Set background color to red
+        color: const Color.fromARGB(255, 141, 29, 29),  // Set background color to red
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -42,11 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      'Suluhu Travels',  // Text under the image
+                      'SULUHU TRAVELS',  // Text under the image
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        fontFamily: "Poppins",
                       ),
                     ),
                   ],
@@ -57,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const Padding(
               padding: EdgeInsets.only(bottom: 30.0),
               child: Text(
-                '@Develope with Effect',  // Footer text
+                '©Develop With Effect',  // Footer text
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),

@@ -38,8 +38,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
-        backgroundColor: Colors.blue.shade800,
+        title: const Text('Dashboard', style: TextStyle(color: Colors.white),),
+        backgroundColor: const Color.fromARGB(255, 141, 29, 29),
       ),
       body: SingleChildScrollView(
         child: Padding(
