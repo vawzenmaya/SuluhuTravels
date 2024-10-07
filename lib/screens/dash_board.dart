@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class DashboardScreen extends StatefulWidget {
   final String? tripName; // Allow tripName to be nullable
@@ -12,14 +11,23 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   double _currentBalance = 500.00; // Initial balance
+  final double _targetAmount = 1000.00; // Set a target goal for the trip
   final TextEditingController _amountController = TextEditingController();
+  List<double> _recentDeposits = []; // List to store recent deposits
 
   void _addMoney() {
     setState(() {
       double amountToAdd = double.tryParse(_amountController.text) ?? 0.0;
       _currentBalance += amountToAdd;
+      if (amountToAdd > 0) {
+        _recentDeposits.add(amountToAdd); // Add deposit to recent deposits
+      }
       _amountController.clear();
     });
+  }
+
+  double _calculateProgress() {
+    return _currentBalance / _targetAmount;
   }
 
   @override
@@ -38,53 +46,80 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Trip Name Display
-              Text(
-                widget.tripName != null
-                    ? 'Saving for: ${widget.tripName}' // Show the trip name if available
-                    : 'No trip selected yet!', // Show message if no trip selected
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Section to view current balance
-              const Text(
-                'Current Balance',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
+              // Container displaying trip name, current balance, target amount, and progress bar
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(246, 239, 216, 142),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '\$$_currentBalance',
+                      widget.tripName != null
+                          ? 'Saving for: ${widget.tripName}' // Show the trip name if available
+                          : 'No trip selected yet!', // Show message if no trip selected
                       style: const TextStyle(
                         fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Current Balance display
+                    Text(
+                      'Current Balance: \$$_currentBalance',
+                      style: const TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 91, 54, 54),
                       ),
                     ),
-                    const Icon(
-                      Icons.account_balance_wallet,
-                      size: 40,
-                      color: Color.fromARGB(255, 45, 104, 231),
+                    const SizedBox(height: 8),
+                    // Target Amount display
+                    Text(
+                      'Target: \$$_targetAmount',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 91, 54, 54),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Progress Bar
+                    LinearProgressIndicator(
+                      value: _calculateProgress(),
+                      backgroundColor: Colors.grey[300],
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        _calculateProgress() < 1.0 ? Colors.orange : Colors.green,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    // Progress Percentage
+                    Text(
+                      'Progress: ${(_calculateProgress() * 100).toStringAsFixed(1)}%',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // App Icon Image
+                    Center(
+                      child: Image.asset(
+                        'assets/icons/app_icon.png', // Replace with your icon path
+                        height: 80, // Adjust the size of the icon
+                        width: 80,
+                      ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 30),
 
-              // Input field to add/remove money
+              // Input field to add money
               TextField(
                 controller: _amountController,
                 keyboardType: TextInputType.number,
@@ -95,7 +130,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Buttons for adding and removing money
+              // Buttons for adding money
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -108,164 +143,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(height: 32),
 
-              // Pie Chart Section
+              // Recent Deposits List Section
               const Text(
-                'Deposit Distribution',
+                'Recent Deposits',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
-              const SizedBox(
-                height: 200,
-                child: PieChartWidget(),
-              ),
-              const SizedBox(height: 30),
 
-              // Bar Graph Section
-              const Text(
-                'Monthly Deposit Breakdown',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              const SizedBox(
-                height: 200,
-                child: BarGraphWidget(),
-              ),
-              const SizedBox(height: 32),
-
-              // Line Graph Section
-              const Text(
-                'Deposit Progress Over Time',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              const SizedBox(
-                height: 200,
-                child: LineGraphWidget(),
-              ),
+              // Display recent deposits or a message if no records yet
+              _recentDeposits.isNotEmpty
+                  ? SizedBox(
+                      height: 200, // Adjust the height as needed
+                      child: ListView.builder(
+                        itemCount: _recentDeposits.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: const Icon(Icons.monetization_on, color: Colors.green),
+                            title: Text('\$${_recentDeposits[index].toStringAsFixed(2)}'),
+                            subtitle: Text('Deposit ${index + 1}'),
+                          );
+                        },
+                      ),
+                    )
+                  : const Center(
+                      child: Text(
+                        'No records yet',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-// Pie Chart Implementation
-class PieChartWidget extends StatelessWidget {
-  const PieChartWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return PieChart(
-      PieChartData(
-        sections: [
-          PieChartSectionData(
-            value: 40,
-            color: Colors.green,
-            title: '40%',
-            radius: 50,
-          ),
-          PieChartSectionData(
-            value: 30,
-            color: Colors.orange,
-            title: '30%',
-            radius: 50,
-          ),
-          PieChartSectionData(
-            value: 30,
-            color: Colors.red,
-            title: '30%',
-            radius: 50,
-          ),
-        ],
-        sectionsSpace: 4,
-        centerSpaceRadius: 40,
-      ),
-    );
-  }
-}
-
-// Bar Graph Implementation
-class BarGraphWidget extends StatelessWidget {
-  const BarGraphWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BarChart(
-      BarChartData(
-        barGroups: [
-          BarChartGroupData(
-            x: 1,
-            barRods: [
-              BarChartRodData(
-                toY: 8,
-                color: Colors.blue,
-                width: 16,
-              ),
-            ],
-          ),
-          BarChartGroupData(
-            x: 2,
-            barRods: [
-              BarChartRodData(
-                toY: 10,
-                color: Colors.blue,
-                width: 16,
-              ),
-            ],
-          ),
-          BarChartGroupData(
-            x: 3,
-            barRods: [
-              BarChartRodData(
-                toY: 6,
-                color: Colors.red,
-                width: 16,
-              ),
-            ],
-          ),
-          BarChartGroupData(
-            x: 4,
-            barRods: [
-              BarChartRodData(
-                toY: 12,
-                color: Colors.green,
-                width: 16,
-              ),
-            ],
-          ),
-        ],
-        titlesData: const FlTitlesData(show: true),
-      ),
-    );
-  }
-}
-
-// Line Graph Implementation
-class LineGraphWidget extends StatelessWidget {
-  const LineGraphWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return LineChart(
-      LineChartData(
-        lineBarsData: [
-          LineChartBarData(
-            spots: [
-              const FlSpot(0, 1),
-              const FlSpot(1, 3),
-              const FlSpot(2, 2),
-              const FlSpot(3, 5),
-              const FlSpot(4, 3),
-              const FlSpot(5, 4),
-            ],
-            isCurved: true,
-            color: Colors.green,
-            barWidth: 4,
-            isStrokeCapRound: true,
-            belowBarData: BarAreaData(show: true, color: Colors.green.withOpacity(0.3)),
-          ),
-        ],
       ),
     );
   }

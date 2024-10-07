@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:travels/screens/dash_board.dart';
 import 'package:travels/screens/widgets/bottom_menu.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:travels/screens/trip_page.dart'; // Import TripPage
+import 'package:travels/screens/gallery_screen.dart'; // Import GalleryScreen
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,11 +15,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _activeIndex = 1;
 
-  // Track the pressed state of each icon
-  bool _isFlightSelected = false;
-  bool _isExploreSelected = false;
-  bool _isCitySelected = false;
-  bool _isPilgrimageSelected = false;
+  // Track the selected category
+  String _selectedCategory = '';
 
   final List<String> imgList = [
     'assets/images/travels.jpg',
@@ -147,7 +147,13 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             ),
-            onPressed: () {},
+            onPressed: () {
+              // Navigate to TripPage when button is pressed
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TripPage()),
+              );
+            },
             child: const Text(
               'Plan Your Next Trip',
               style: TextStyle(
@@ -179,41 +185,56 @@ class _HomePageState extends State<HomePage> {
               _buildCategoryItem(
                 icon: Icons.flight_takeoff,
                 label: 'Adventure',
-                isSelected: _isFlightSelected,
+                isSelected: _selectedCategory == 'Adventure',
                 onPressed: () {
                   setState(() {
-                    _isFlightSelected = !_isFlightSelected;
+                    _selectedCategory = 'Adventure';
                   });
+                  // Navigate to TripPage
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const TripPage()),
+                  );
                 },
               ),
               _buildCategoryItem(
                 icon: Icons.travel_explore_outlined,
                 label: 'Discover',
-                isSelected: _isExploreSelected,
+                isSelected: _selectedCategory == 'Discover',
                 onPressed: () {
                   setState(() {
-                    _isExploreSelected = !_isExploreSelected;
+                    _selectedCategory = 'Discover';
                   });
+                  // Navigate to GalleryScreen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const GalleryScreen()),
+                  );
                 },
               ),
               _buildCategoryItem(
                 icon: Icons.volunteer_activism,
                 label: 'Donate',
-                isSelected: _isCitySelected,
+                isSelected: _selectedCategory == 'Donate',
                 onPressed: () {
                   setState(() {
-                    _isCitySelected = !_isCitySelected;
+                    _selectedCategory = 'Donate';
                   });
                 },
               ),
               _buildCategoryItem(
-                icon: Icons.place,
-                label: 'Cities',
-                isSelected: _isPilgrimageSelected,
+                icon: Icons.wallet,
+                label: 'Wallet',
+                isSelected: _selectedCategory == 'Wallet',
                 onPressed: () {
                   setState(() {
-                    _isPilgrimageSelected = !_isPilgrimageSelected;
+                    _selectedCategory = 'Wallet';
                   });
+                  // Navigate to DashboardScreen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                  );
                 },
               ),
             ],

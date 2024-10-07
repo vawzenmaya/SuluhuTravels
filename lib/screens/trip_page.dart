@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travels/screens/chat_page.dart';
+import 'package:travels/screens/dash_board.dart';
 import 'package:travels/screens/selected_trip.dart';
 
 class TripPage extends StatelessWidget {
@@ -86,7 +88,7 @@ class TripPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Featured Trip Section
-            _buildFeaturedTripSection(),
+            _buildFeaturedTripSection(context),
 
             const SizedBox(height: 20),
 
@@ -126,11 +128,10 @@ class TripPage extends StatelessWidget {
                             tripTitle: 'Umrah',
                             tripDescription: 'Umrah is a pilgrimage to Mecca, performed by Muslims that can be undertaken at any time of the year.',
                             tripDate: "December",
-                            tripDuration: "2 weeks",
+                            tripDuration: "1 week",
                             tripPrice: '\$1650 (7 days)',
                             onBookNow: (tripName) {
-                              // You can add functionality here when booking the trip
-                              print('Booked: $tripName');
+                              _showBookingDialog(context, tripName);
                             },
                           ),
                         ),
@@ -156,8 +157,7 @@ class TripPage extends StatelessWidget {
                             tripDate: "November",
                             tripPrice: '\$500 (5 days)',
                             onBookNow: (tripName) {
-                              // You can add functionality here when booking the trip
-                              print('Booked: $tripName');
+                              _showBookingDialog(context, tripName);
                             },
                           ),
                         ),
@@ -248,98 +248,139 @@ class TripPage extends StatelessWidget {
   }
 
   // Featured Trip Section
-  Widget _buildFeaturedTripSection() {
-  return Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            Colors.orangeAccent,
-            Colors.deepOrange,
+  Widget _buildFeaturedTripSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              Colors.orangeAccent,
+              Colors.deepOrange,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 15,
+              offset: const Offset(0, 4),
+            ),
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 15,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
-            child: Image.asset(
-              'assets/images/suluhu.jpg',
-              height: 160,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView( // Wrap the Row in SingleChildScrollView
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Featured Trip: Madina',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        '\$1800 (7 days)',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 20), // Add some spacing
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 8,
-                      ),
-                    ),
-                    onPressed: () {
-                      // Add your booking functionality here
-                    },
-                    child: const Text(
-                      'Book Now',
-                      style: TextStyle(
-                        color: Colors.deepOrangeAccent,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              child: Image.asset(
+                'assets/images/suluhu.jpg',
+                height: 160,
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Featured Trip: Madina',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          '\$1800 (7 days)',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 20), // Add some spacing
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 8,
+                        ),
+                      ),
+                      onPressed: () {
+                        // Handle booking
+                        _showBookingDialog(context, 'Madina Trip');
+                      },
+                      child: const Text(
+                        'Book Now',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
+
+  // Show Booking Dialog Method
+  void _showBookingDialog(BuildContext context, String tripName) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Book Now: $tripName'),
+          content: const Text(
+            'Please confirm your booking for the selected trip.',
+            style: TextStyle(fontSize: 16),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Navigate to chat page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatPage()),
+                );
+              },
+              child: const Text('Pay Full Amount'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Proceed with booking
+                Navigator.push(context,MaterialPageRoute(builder: (context) => const DashboardScreen()));
+                // You can add more actions here
+              },
+              child: const Text('Pay In Installments'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
